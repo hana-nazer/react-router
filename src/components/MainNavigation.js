@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import classes from './MainNavigation.module.css'
+import { NavLink } from "react-router-dom";
+import classes from "./MainNavigation.module.css";
 
 function MainNavigation() {
   return (
@@ -8,10 +8,22 @@ function MainNavigation() {
       <nav>
         <ul className={classes.list}>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink
+              to="/"
+              className={({isActive}) => (isActive ? classes.active : undefined)}
+              end 
+            >
+              Home
+            </NavLink>
           </li>
+
           <li>
-            <Link to="/products">products</Link>
+            <NavLink
+              to="/products"
+              className={({isActive}) => (isActive ? classes.active : undefined)}
+            >
+              products
+            </NavLink>
           </li>
         </ul>
       </nav>
