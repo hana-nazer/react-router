@@ -23,12 +23,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/Home";
 import EventsPage from "./pages/Events";
-import EventDetailsPage from "./pages/EventDetails";
+import EventDetailsPage, {loader as EventDetailsLoader}from "./pages/EventDetails";
 import NewEventPage from "./pages/NewEvent";
 import EditEventPage from "./pages/EditEvent";
 import RootLayout from "./pages/RootLayout";
 import EventRootLayout from "./pages/EventRoot";
-import {loader as eventsLoader} from './pages/Events'
+import { loader as eventsLoader } from "./pages/Events";
 import ErrorPage from "./pages/Error";
 
 function App() {
@@ -36,16 +36,26 @@ function App() {
     {
       path: "/",
       element: <RootLayout />,
-      errorElement:<ErrorPage/>,
+      errorElement: <ErrorPage />,
       children: [
-        { index:true, element: <HomePage /> },
-        {path:'events',element:<EventRootLayout/> , children:[
-          { index:true, element: <EventsPage /> ,loader:eventsLoader },
-          { path: ":e_id", element: <EventDetailsPage /> },
-          { path: "newEvent", element: <NewEventPage /> },
-          { path: ":e_id/edit", element: <EditEventPage /> },
-        ]}
-      
+        { index: true, element: <HomePage /> },
+        {
+          path: "events",
+          element: <EventRootLayout />,
+          children: [
+            { index: true, element: <EventsPage />, loader: eventsLoader },
+            {
+              path: ":eventId",
+              loader: EventDetailsLoader,
+              id: "event-details",
+              children: [
+                { index: true, element: <EventDetailsPage /> },
+                { path: "edit", element: <EditEventPage /> },
+              ]
+            },
+            { path: "newEvent", element: <NewEventPage /> },
+          ],
+        },
       ],
     },
   ]);
