@@ -1,5 +1,5 @@
 import React from "react";
-import { redirect } from "react-router-dom";
+import { json, redirect } from "react-router-dom";
 import EventForm from "../components/EventForm";
 function NewEventPage() {
   return <EventForm />;
@@ -23,8 +23,12 @@ export async function action({ request, params }) {
     body: JSON.stringify(eventData),
   });
 
+  if(response.status===422){
+    return response
+  }
+
   if(!response.ok){
-    throw new Response({message:'could submit data'},{status:500})
+    throw json({message:'could not able to submit data'},{status:500})
   }
   return redirect('/events')
 }
