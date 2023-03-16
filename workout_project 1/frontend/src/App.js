@@ -29,12 +29,14 @@ import EditEventPage from "./pages/EditEvent";
 import RootLayout from "./pages/RootLayout";
 import EventRootLayout from "./pages/EventRoot";
 import {loader as eventsLoader} from './pages/Events'
+import ErrorPage from "./pages/Error";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout />,
+      errorElement:<ErrorPage/>,
       children: [
         { index:true, element: <HomePage /> },
         {path:'events',element:<EventRootLayout/> , children:[
